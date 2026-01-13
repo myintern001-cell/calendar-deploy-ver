@@ -1,0 +1,2512 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+:root {
+            --primary-color:  #1fb5c9;
+            --sidebar-bg:  #22c6dc;
+            --emergency: #dc3545;
+            --urgency: #ffc107;
+            --elective: #6c757d;
+
+            --room-1-bg: #fee2e2;
+            --room-1-text: #991b1b;
+            --room-1-border: #ef4444;
+
+            --room-2-bg: #fef3c7;
+            --room-2-text: #92400e;
+            --room-2-border: #f59e0b;
+
+            --room-3-bg: #dbeafe;
+            --room-3-text: #1e40af;
+            --room-3-border: #3b82f6;
+
+            --room-4-bg: #d1fae5;
+            --room-4-text: #065f46;
+            --room-4-border: #10b981;
+
+            --room-5-bg: #ede9fe;
+            --room-5-text: #5b21b6;
+            --room-5-border: #8b5cf6;
+
+            --room-6-bg: #f3ebe5;
+            --room-6-text: #5c3d2e;
+            --room-6-border: #c89b7b;
+
+            --room-7-bg: #f1f3f5;
+            --room-7-text: #495057;
+            --room-7-border: #adb5bd;
+        }
+
+        body {
+            font-family: 'Sarabun','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* ===== ROOM MAPPING ===== */
+        .room-1 {
+        --room-bg: var(--room-1-bg);
+        --room-text: var(--room-1-text);
+        --room-border: var(--room-1-border);
+        }
+
+        .room-2 {
+        --room-bg: var(--room-2-bg);
+        --room-text: var(--room-2-text);
+        --room-border: var(--room-2-border);
+        }
+
+        .room-3 {
+        --room-bg: var(--room-3-bg);
+        --room-text: var(--room-3-text);
+        --room-border: var(--room-3-border);
+        }
+
+        .room-4 {
+        --room-bg: var(--room-4-bg);
+        --room-text: var(--room-4-text);
+        --room-border: var(--room-4-border);
+        }
+
+        .room-5 {
+        --room-bg: var(--room-5-bg);
+        --room-text: var(--room-5-text);
+        --room-border: var(--room-5-border);
+        }
+
+        .room-6 {
+        --room-bg: var(--room-6-bg);
+        --room-text: var(--room-6-text);
+        --room-border: var(--room-6-border);
+        }
+
+        .room-7 {
+        --room-bg: var(--room-7-bg);
+        --room-text: var(--room-7-text);
+        --room-border: var(--room-7-border);
+        }
+
+
+
+        .page-wrapper {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 1fr auto;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR (FIXED) ===== */
+            .sidebar {
+                background: var(--sidebar-bg);
+                color: white;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 250px;
+                height: 100vh;
+                padding: 20px;
+                overflow-y: auto;
+                z-index: 300;
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar-brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+            }
+
+            .sidebar-menu {
+                list-style: none;
+                padding: 0;
+            }
+
+            .sidebar-menu li {
+                margin-bottom: 10px;
+            }
+
+            .sidebar-menu a {
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 15px;
+                border-radius: 8px;
+                transition: background 0.3s;
+            }
+
+            .sidebar-menu a:hover, .sidebar-menu a.active {
+                background: rgba(255,255,255,0.2);
+            }
+
+        /* ===== SIDEBAR BACKDROP ===== */
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-backdrop.active {
+            display: block;
+            opacity: 1;
+        }/* ===== SIDEBAR BACKDROP ===== */
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-backdrop.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .main-content {
+            padding: 30px;
+            grid-column: 2;
+            grid-row: 1;
+            overflow-x: hidden;
+            padding-bottom: 30px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .calendar-table td {
+            padding: 10px;
+            vertical-align: top;
+            border: 1px solid #e0e0e0;
+            height: 120px;          /* มีอยู่แล้ว */
+            width: 14.28%;          /* ← เพิ่มบรรทัดนี้ (100% ÷ 7 วัน) */
+            max-height: 120px;      /* ← เพิ่มบรรทัดนี้ */
+            overflow: hidden;       /* ← เพิ่มบรรทัดนี้ */
+            position: relative;
+        }
+
+
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .month-nav button {
+            border: none;
+            background: var(--sidebar-bg);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+        }
+
+        .month-nav button:hover {
+            opacity: 0.8;
+        }
+
+        /* ===== MONTH NAVIGATION RESPONSIVE ===== */
+        @media (max-width: 767px) {
+            .month-nav {
+                justify-content: center;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .month-nav h4 {
+                font-size: 1.125rem;
+                min-width: 180px;
+                text-align: center;
+            }
+
+            .month-nav button {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .month-nav h4 {
+                font-size: 1rem;
+                min-width: 150px;
+            }
+
+            .month-nav button {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--room-bg, #adb5bd);
+            border: 2px solid var(--room-border, #6c757d);
+            flex-shrink: 0;
+        }
+
+        /* ===== LEGEND RESPONSIVE ===== */
+        @media (max-width: 991px) {
+            .legend {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .legend-item {
+                font-size: 12px;
+            }
+
+            .legend-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .legend {
+                display: none; /* ซ่อนบนมือถือเล็ก */
+            }
+        }
+
+        .calendar-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .calendar-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .calendar-table td {
+            padding: 10px;
+            vertical-align: top;
+            border: 1px solid #e0e0e0;
+            height: 120px;
+            position: relative;
+        }
+
+        .date-number {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .other-month {
+            color: #ccc;
+        }
+
+        .today {
+            background-color: #e3f2fd;
+        }
+
+        .event-item {
+            padding: 8px 10px;
+            margin-bottom: 4px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid var(--room-border, #adb5bd);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: var(--room-text, #333);
+            background: var(--room-bg, #e9ecef);
+        }
+
+        .event-item:hover {
+            transform: translateX(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .event-title {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+            max-width: 150px;
+        }
+
+        .event-time {
+            font-size: 11px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .event-room {
+            font-size: 10px;
+            background: rgba(0,0,0,0.08);
+            border-radius: 3px;
+            padding: 1px 6px;
+            display: inline-block;
+            font-weight: 400;
+        }
+
+        .modal-backdrop.show {
+            opacity: 0.5;
+        }
+
+        .equipment-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            margin: 2px;
+            background: #e3f2fd;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+/* ปุ่ม btn-outline-primary (วันนี้) */
+.btn-outline-primary {
+    color: var(--primary-color);                
+    background-color: #FFFFFF;  
+    border-color: var(--primary-color);      /* สีเส้นขอบ */
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);  /* พื้นหลังเวลาชี้เมาส์ */
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+/* ปุ่ม btn-primary (เพิ่มการจอง) */
+.btn-primary {
+    background-color: #28a745;  /* เปลี่ยนพื้นหลังเป็นเขียว */
+    border-color: #218838;      /* เส้นขอบเขียวเข้ม */
+}
+
+.btn-primary:hover {
+    background-color: #218838;  /* พื้นหลังเวลา hover */
+    border-color: #1e7e34;
+}
+
+
+#modal-view-event-add .modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+#modal-view-event-add .modal-header {
+    background-color: var(--primary-color)!important;
+    color: white;
+    border-bottom: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+}
+
+#modal-view-event-add .modal-header .btn-close {
+    filter: brightness(0) invert(1); /* ปรับ close button ให้ขาว */
+}
+
+#modal-view-event-add .modal-body {
+    padding: 1.5rem;
+    background-color: #f8f9fa; /* ให้สว่างตัดกับ header */
+    
+}
+
+#modal-view-event-add .card {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+#modal-view-event-add .card-header {
+    font-weight: 600;
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+#modal-view-event-add .form-label {
+    font-weight: 500;
+}
+
+#modal-view-event-add .form-control,
+#modal-view-event-add .form-select {
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+#modal-view-event-add .form-check-label {
+    font-weight: 400;
+    margin-left: 0.25rem;
+}
+
+#modal-view-event-add .modal-footer {
+    background-color: #f1f3f5;
+    border-top: none;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#modal-view-event-add .modal-footer .btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+#modal-view-event-add .modal-footer .btn-success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+#modal-view-event-add .modal-footer .btn-success:hover {
+    background-color: darken(var(--primary-color), 10%);
+}
+
+#modal-view-event-add .modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+#modal-view-event-add .modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* ===== Timepicker Custom Styling ===== */
+
+/* Header */
+.timepicker-popover .popover-header {
+    background-color: var(--primary-color) ;
+    color: white ;
+    border-bottom: none;
+    padding: 12px 16px;
+    font-weight: 600;
+}
+
+/* ปุ่มปิด (X) */
+.timepicker-popover .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+/* Body */
+.timepicker-popover .popover-body {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+/* ลูกศรขึ้น/ลง */
+.timepicker-popover .chevron-btn {
+    color: var(--primary-color) ;
+    transition: all 0.2s;
+}
+
+.timepicker-popover .chevron-btn:hover {
+    color: #0d7a8a ;
+    transform: scale(1.2);
+}
+
+/* ช่องตัวเลข */
+.timepicker-popover input.form-control {
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+    padding: 8px;
+    width: 3.5rem;
+}
+
+.timepicker-popover input.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.1);
+    outline: none;
+}
+
+/* เครื่องหมาย : */
+.timepicker-popover .keyboard-input td:nth-child(2) {
+    font-size: 20px;
+    font-weight: 700;
+    color: #6c757d;
+    padding: 0 4px;
+}
+
+/* ปุ่ม Cancel (X สีเทา) */
+.timepicker-popover .cancel-btn {
+    background-color: #6c757d ;
+    border-color: #6c757d ;
+    color: white ;
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.timepicker-popover .cancel-btn:hover {
+    background-color: #5a6268 ;
+    border-color: #545b62 ;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ปุ่ม Submit (✓ สีเขียว) */
+.timepicker-popover .submit-btn {
+    background-color: #28a745 ;
+    border-color: #28a745 ;
+    color: white ;
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.timepicker-popover .submit-btn:hover {
+    background-color: #218838 ;
+    border-color: #1e7e34 ;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.timepicker-popover .submit-btn:disabled {
+    background-color: #6c757d ;
+    border-color: #6c757d ;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Container ปุ่ม */
+.timepicker-popover .popover-body > div:last-child {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Shadow และ Border */
+.timepicker-popover {
+    border-radius: 12px ;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15) ;
+    border: none ;
+}
+
+.timepicker-popover .popover-arrow::before {
+    border-bottom-color: var(--primary-color)!important ;
+}
+
+.timepicker-popover .popover-arrow::after {
+    border-bottom-color: var(--primary-color)!important ;
+}
+
+.dayContainer {
+    min-width: 280px;
+    max-width: 280px;
+}
+
+/* ถ้าต้องการเพิ่ม Icon ปฏิทิน หน้า Input */
+.date-input-wrapper {
+    position: relative;
+}
+
+.date-input-wrapper::after {
+    content: "\F1EC"; /* Bootstrap Icon calendar3 */
+    font-family: "bootstrap-icons";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    pointer-events: none;
+    font-size: 18px;
+}
+
+/* ===== FOOTER ===== */
+.main-footer {
+    position: relative; 
+    width: auto;
+    background: var(--sidebar-bg);
+    color: white;
+    padding: 15px 30px;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
+
+    z-index: 500; 
+}
+
+.main-footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.main-footer strong {
+    font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+    .main-footer {
+        text-align: center;
+        padding: 12px 15px;
+    }
+    
+    .main-footer .row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .main-footer .text-start,
+    .main-footer .text-end {
+        text-align: center !important;
+    }
+
+    .main-footer p {
+        font-size: 13px;
+        margin: 0;
+    }
+}
+/* ===== Event Modal Styling ===== */
+
+#eventModal .modal-header {
+    background: var(--primary-color);
+    color: white;
+    border-bottom: none;
+    padding: 1rem 1.5rem;
+}
+
+#eventModal .modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+#eventModal .modal-body {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+}
+
+#eventModal .modal-footer {
+    background-color: #f1f3f5;
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/* ปุ่มลบ */
+#eventModal .modal-footer .btn-danger {
+    margin-right: auto;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 20px;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+#eventModal .modal-footer .btn-danger:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+#eventModalBody .event-purpose {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+#eventModalBody .purpose-text {
+    max-width: 600px;           /* จำกัดความกว้าง */
+    
+    white-space: normal;        /* อนุญาตให้ขึ้นบรรทัดใหม่ */
+    word-break: break-all;      /* ตัวเลข/ข้อความติดกัน */
+    overflow-wrap: anywhere;
+}
+
+.recent-bookings-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.table-responsive {
+    overflow-x: hidden;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.section-header h4 {
+    margin: 0;
+    color: #333;
+    font-weight: 600;
+}
+
+
+#recentBookingsTable {
+    margin-bottom: 0;
+}
+
+#recentBookingsTable thead {
+    background: #f8f9fa;
+}
+
+#recentBookingsTable thead th {
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px;
+    font-size: 14px;
+}
+
+#recentBookingsTable tbody td {
+    padding: 12px;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #495057;
+}
+
+#recentBookingsTable tbody td:nth-child(4) {
+    max-width: 50px; /* ปรับตามต้องการ */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#recentBookingsTable tbody td:nth-child() {
+    max-width: 50px; /* ปรับตามต้องการ */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#recentBookingsTable tbody tr {
+    transition: all 0.2s;
+}
+
+#recentBookingsTable tbody tr:hover {
+    background-color: #f8f9fa;
+    /*transform: scale(1.005);*/
+}
+
+.room-badge {
+  background: var(--room-bg, #e9ecef);
+  color: var(--room-text, #333);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btn-view-detail {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.btn-view-detail:hover {
+    transform: scale(1.05);
+}
+
+.filter-row input {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+/* ===== Datepicker Popover Custom Styling ===== */
+
+/* Popover container */
+.datepicker-popover {
+    max-width: 320px;
+    width: 320px;
+    border-radius: 16px ;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2) ;
+    border: none ;
+    overflow: hidden ;
+    padding: 0 ;
+}
+
+.datepicker-popover .popover-body {
+    padding: 0 ;
+    background-color: white ;
+    border-radius: 16px ;
+}
+
+/* แก้แถบขาวด้านบน */
+.datepicker-popover .popover-arrow {
+    display: none ;
+}
+
+/* Main container */
+.datepicker-container {
+    font-family: 'Sarabun', sans-serif;
+    user-select: none;
+    background: white;
+    border-radius: 16px;
+}
+
+/* Header */
+.datepicker-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px 16px 0 0;
+    flex-wrap: nowrap;
+}
+
+.datepicker-title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+}
+
+/* Dropdown เดือน */
+.datepicker-month-select {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 110px;
+    white-space: nowrap;
+}
+
+.datepicker-month-select:hover,
+.datepicker-month-select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.datepicker-month-select option {
+    background: white;
+    color: #212529;
+    padding: 8px;
+}
+
+/* Year control */
+.datepicker-year-control {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    padding: 4px 8px;
+}
+
+.datepicker-year-display {
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.datepicker-year-prev,
+.datepicker-year-next {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 2px 4px;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.datepicker-year-prev:hover:not(:disabled),
+.datepicker-year-next:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    transform: scale(1.1);
+}
+
+.datepicker-year-prev:disabled,
+.datepicker-year-next:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Navigation buttons */
+.datepicker-prev-month,
+.datepicker-next-month {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    transition: all 0.2s;
+}
+
+.datepicker-prev-month:hover:not(:disabled),
+.datepicker-next-month:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.2);
+    border-radius: 4px;
+}
+
+.datepicker-prev-month:disabled,
+.datepicker-next-month:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Calendar table */
+.datepicker-calendar {
+    width: 100%;
+    padding: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+.datepicker-calendar thead th {
+    color: #999;
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    padding: 8px 4px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.datepicker-calendar tbody td {
+    padding: 2px;
+}
+
+/* Day cells */
+.datepicker-day {
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    transition: all 0.2s;
+    color: #333;
+    width: 36px;
+    height: 36px;
+    line-height: 20px;
+}
+
+.datepicker-day.current-month:hover:not(.disabled):not(.selected) {
+    background: #f0f0f0;
+}
+
+/* Today */
+.datepicker-day.today {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 600;
+    background: white;
+}
+
+.datepicker-day.today:hover:not(.selected) {
+    background: #f0f0f0;
+}
+
+/* Selected date */
+.datepicker-day.selected {
+    background: var(--primary-color) ;
+    color: white ;
+    font-weight: 600;
+}
+
+.datepicker-day.selected:hover {
+    background: var(--primary-color) ;
+}
+
+/* Previous/Next month days */
+.datepicker-day.prev-month,
+.datepicker-day.next-month {
+    color: #ccc;
+    cursor: default;
+}
+
+/* Disabled days */
+.datepicker-day.disabled {
+    color: #ddd ;
+    cursor: not-allowed ;
+    background: transparent ;
+}
+
+.datepicker-day.disabled:hover {
+    background: transparent ;
+    transform: none ;
+}
+
+/* Footer */
+.datepicker-footer {
+    padding: 8px 12px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    background: white;
+}
+
+.datepicker-today {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transition: all 0.2s;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 6px;
+}
+
+.datepicker-today:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+.datepicker-clear {
+    transition: all 0.2s;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 6px;
+}
+
+.datepicker-clear:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Input field styling */
+input.datetimepicker,
+input[data-datepicker] {
+    cursor: pointer;
+    background-color: white;
+}
+
+input.datetimepicker:focus,
+input[data-datepicker]:focus {
+    border-color: var(--primary-color, #17a2b8);
+    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.1);
+    outline: none;
+}
+
+/* Animation */
+.datepicker-popover {
+    animation: datepickerFadeIn 0.15s ease-out;
+}
+
+@keyframes datepickerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .datepicker-popover {
+        max-width: 300px;
+        width: 300px;
+    }
+    
+    .datepicker-calendar {
+        padding: 5px;
+    }
+    
+    .datepicker-day {
+        padding: 6px;
+        font-size: 13px;
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* ===== HAMBURGER BUTTON ===== */
+.hamburger-btn {
+    display: none; /* ซ่อนบน Desktop */
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 400;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    width: 45px;
+    height: 45px;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+    background: var(--sidebar-bg);
+    transform: scale(1.05);
+}
+
+/* Animation เมื่อเปิด Sidebar */
+.hamburger-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* ===== TABLET (768px - 991px) ===== */
+@media (max-width: 991px) {
+    .page-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        grid-column: 1;
+        padding: 80px 20px 20px 20px; /* เพิ่ม padding-top สำหรับ hamburger */
+    }
+
+    .hamburger-btn {
+        display: flex;
+    }
+
+    .main-footer {
+        padding: 15px 20px;
+    }
+}
+
+/* ===== MOBILE (0 - 767px) ===== */
+@media (max-width: 767px) {
+    .main-content {
+        padding: 70px 15px 15px 15px;
+    }
+
+    .calendar-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .calendar-header > div:first-child {
+        text-align: center;
+    }
+
+    .calendar-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .calendar-header .d-flex {
+        justify-content: center;
+    }
+
+    .hamburger-btn {
+        width: 40px;
+        height: 40px;
+        top: 12px;
+        left: 12px;
+    }
+
+    .hamburger-btn span {
+        width: 22px;
+    }
+}
+
+/* ===== SMALL MOBILE (0 - 575px) ===== */
+@media (max-width: 575px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        padding: 65px 10px 10px 10px;
+    }
+
+    .calendar-header h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .calendar-header p {
+        font-size: 0.875rem;
+    }
+
+    .calendar-header .btn {
+        font-size: 0.875rem;
+        padding: 8px 12px;
+    }
+}
+
+/* ===== BUTTON RESPONSIVE ===== */
+@media (max-width: 575px) {
+    .calendar-header .d-flex.gap-3 {
+        flex-direction: column;
+        gap: 10px !important;
+        width: 100%;
+    }
+
+    .calendar-header .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ===== CALENDAR GRID SYSTEM ===== */
+.calendar-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Desktop: Table Layout */
+.calendar-table table {
+    width: 100%;
+    border-collapse: collapse;
+    display: table;
+}
+
+.calendar-table th {
+    background: #f8f9fa;
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.calendar-table td {
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #e0e0e0;
+    height: 120px;
+    width: 14.28%;
+    max-height: 120px;
+    overflow: hidden;
+    position: relative;
+}
+
+.date-number {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.other-month {
+    color: #ccc;
+}
+
+.today {
+    background-color: #e3f2fd;
+}
+
+.event-item {
+    padding: 8px 10px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--room-border, #adb5bd);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    color: var(--room-text, #333);
+    background: var(--room-bg, #e9ecef);
+}
+
+.event-item:hover {
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.event-title {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    max-width: 150px;
+}
+
+.event-time {
+    font-size: 11px;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+.event-room {
+    font-size: 10px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 3px;
+    padding: 1px 6px;
+    display: inline-block;
+    font-weight: 400;
+}
+
+/* ===== MOBILE CALENDAR VIEW (LIST MODE) ===== */
+.mobile-calendar-view {
+    display: none;
+}
+
+.calendar-day-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+}
+
+.calendar-day-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.calendar-day-card.today {
+    border: 2px solid var(--primary-color);
+    background: #e3f2fd;
+}
+
+.calendar-day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.calendar-day-date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.calendar-day-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.calendar-day-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-day-name .day {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.calendar-day-name .month-year {
+    font-size: 12px;
+    color: #999;
+}
+
+.calendar-day-badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.calendar-day-events {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-event-item {
+    background: var(--room-bg, #e9ecef);
+    border-left: 4px solid var(--room-border, #adb5bd);
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mobile-event-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.mobile-event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.mobile-event-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--room-text, #333);
+    flex: 1;
+}
+
+.mobile-event-time {
+    font-size: 13px;
+    color: var(--room-text, #333);
+    opacity: 0.8;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+.mobile-event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mobile-event-room {
+    font-size: 12px;
+    color: var(--room-text, #333);
+    opacity: 0.9;
+}
+
+.mobile-event-room i {
+    margin-right: 4px;
+}
+
+.calendar-day-empty {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+}
+
+.calendar-day-empty i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    opacity: 0.3;
+}
+
+/* ===== TABLET (768px - 991px) ===== */
+@media (max-width: 991px) {
+    .calendar-table td {
+        height: 100px;
+        max-height: 100px;
+        padding: 8px;
+    }
+
+    .event-item {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+
+    .event-title {
+        font-size: 12px;
+        max-width: 100px;
+    }
+
+    .event-time {
+        font-size: 10px;
+    }
+
+    .event-room {
+        font-size: 9px;
+        padding: 1px 4px;
+    }
+
+    .date-number {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+}
+
+/* ===== MOBILE (0 - 767px) ===== */
+@media (max-width: 767px) {
+    /* ซ่อน Table Calendar */
+    .calendar-table table {
+        display: none;
+    }
+
+    /* แสดง Mobile View */
+    .mobile-calendar-view {
+        display: block;
+        padding: 10px;
+    }
+
+    .calendar-table {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    /* ปรับ Legend ให้แสดงแบบ Compact */
+    .legend {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .legend-item {
+        font-size: 11px;
+        background: white;
+        padding: 4px 8px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+}
+
+/* ===== SMALL MOBILE (0 - 575px) ===== */
+@media (max-width: 575px) {
+    .calendar-day-card {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .calendar-day-number {
+        font-size: 28px;
+    }
+
+    .calendar-day-name .day {
+        font-size: 14px;
+    }
+
+    .mobile-event-item {
+        padding: 10px;
+    }
+
+    .mobile-event-title {
+        font-size: 13px;
+    }
+
+    .mobile-event-time {
+        font-size: 12px;
+    }
+
+    .mobile-event-room {
+        font-size: 11px;
+    }
+
+    .legend-item {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .legend-dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* ===== VIEW TOGGLE BUTTON ===== */
+.view-toggle {
+    display: none;
+    gap: 5px;
+}
+
+.view-toggle .btn {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+@media (max-width: 767px) {
+    .view-toggle {
+        display: flex;
+    }
+}
+
+/* ===== LOADING STATE ===== */
+.calendar-loading {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.calendar-loading i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== SCROLL TO TODAY BUTTON (MOBILE) ===== */
+.scroll-to-today {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 100;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.scroll-to-today:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+.scroll-to-today i {
+    font-size: 24px;
+}
+
+@media (max-width: 767px) {
+    .scroll-to-today {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ===== BOOKINGS TABLE RESPONSIVE ===== */
+
+.recent-bookings-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.section-header h4 {
+    margin: 0;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.section-header h4 i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+/* Desktop Table View */
+.table-view {
+    display: block;
+}
+
+.card-view {
+    display: none;
+}
+
+#recentBookingsTable {
+    margin-bottom: 0;
+}
+
+#recentBookingsTable thead {
+    background: #f8f9fa;
+}
+
+#recentBookingsTable thead th {
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+#recentBookingsTable tbody td {
+    padding: 12px;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #495057;
+}
+
+#recentBookingsTable tbody tr {
+    transition: all 0.2s;
+}
+
+#recentBookingsTable tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.002);
+}
+
+.room-badge {
+    background: var(--room-bg, #e9ecef);
+    color: var(--room-text, #333);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-view-detail {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-view-detail:hover {
+    transform: scale(1.05);
+}
+
+.filter-row input {
+    font-size: 12px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+}
+
+.filter-row input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(31, 181, 201, 0.1);
+    outline: none;
+}
+
+#noResults {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#noResults i {
+    font-size: 48px;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+#noResults p {
+    color: #999;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Mobile Card View */
+.booking-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--room-border, #adb5bd);
+    transition: all 0.2s;
+}
+
+.booking-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.booking-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.booking-card-title {
+    flex: 1;
+}
+
+.booking-card-title h5 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.booking-card-date {
+    font-size: 13px;
+    color: #666;
+}
+
+.booking-card-room {
+    margin-left: 12px;
+}
+
+.booking-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.booking-info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-info-label {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.booking-info-value {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.booking-info-value i {
+    margin-right: 4px;
+    color: var(--primary-color);
+}
+
+.booking-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.booking-card-unit {
+    font-size: 13px;
+    color: #666;
+}
+
+.booking-card-unit strong {
+    color: #333;
+}
+
+/* Mobile Search Bar */
+.mobile-search-bar {
+    display: none;
+    margin-bottom: 15px;
+}
+
+.mobile-search-bar input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.mobile-search-bar input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(31, 181, 201, 0.1);
+    outline: none;
+}
+
+/* ===== LEGEND RESPONSIVE ===== */
+
+.legend-container {
+    position: relative;
+    width: 100%;
+}
+
+.legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    padding: 6px 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--room-bg, #adb5bd);
+    border: 2px solid var(--room-border, #6c757d);
+    flex-shrink: 0;
+}
+
+/* Collapsible Legend for Mobile */
+.legend-toggle {
+    display: none;
+    width: 100%;
+    padding: 10px 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+}
+
+.legend-toggle:hover {
+    background: #1a9aae;
+}
+
+.legend-toggle i {
+    margin-left: 8px;
+    transition: transform 0.3s;
+}
+
+.legend-toggle.active i {
+    transform: rotate(180deg);
+}
+
+.legend-wrapper {
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.legend-wrapper.collapsed {
+    max-height: 0;
+}
+
+/* Scrollable Legend Container */
+.legend-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 0;
+    margin: 0 -10px;
+}
+
+.legend-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.legend-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.legend-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+.legend-scroll::-webkit-scrollbar-thumb:hover {
+    background: #1a9aae;
+}
+
+.legend-scroll .legend {
+    flex-wrap: nowrap;
+    padding: 0 10px;
+}
+
+/* ===== TYPOGRAPHY RESPONSIVE ===== */
+
+/* Base Typography */
+body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+small {
+    font-size: 0.875rem;
+}
+
+/* Calendar Header Typography */
+.calendar-header h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.calendar-header p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Month Navigation Typography */
+.month-nav h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Section Headers */
+.section-header h4 {
+    font-size: 1.5rem;
+}
+
+/* Button Text */
+.btn {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.btn-sm {
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    font-size: 1.125rem;
+}
+
+/* ===== TABLET RESPONSIVE (768px - 991px) ===== */
+@media (max-width: 991px) {
+    /* Table adjustments */
+    #recentBookingsTable thead th {
+        font-size: 13px;
+        padding: 10px 8px;
+    }
+    
+    #recentBookingsTable tbody td {
+        font-size: 13px;
+        padding: 10px 8px;
+    }
+    
+    .room-badge {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+    
+    .btn-view-detail {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+    
+    /* Legend scrollable */
+    .legend-scroll {
+        display: block;
+    }
+    
+    .legend-item {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+    
+    .legend-dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    /* Typography */
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+    }
+    
+    h4 {
+        font-size: 1.25rem;
+    }
+    
+    .calendar-header h2 {
+        font-size: 1.75rem;
+    }
+    
+    .month-nav h4 {
+        font-size: 1.25rem;
+    }
+}
+
+/* ===== MOBILE RESPONSIVE (0 - 767px) ===== */
+@media (max-width: 767px) {
+    .recent-bookings-section {
+        padding: 20px 15px;
+        margin-top: 20px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .section-header h4 {
+        font-size: 1.25rem;
+    }
+    
+    /* Hide Table, Show Cards */
+    .table-view {
+        display: none;
+    }
+    
+    .card-view {
+        display: block;
+    }
+    
+    /* Show Mobile Search */
+    .mobile-search-bar {
+        display: block;
+    }
+    
+    /* Collapsible Legend */
+    .legend-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .legend-scroll {
+        display: block;
+        margin: 0;
+    }
+    
+    .legend {
+        gap: 10px;
+        padding: 0;
+    }
+    
+    .legend-item {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-width: 2px;
+    }
+    
+    /* Typography Mobile */
+    body {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+    }
+    
+    h4 {
+        font-size: 1.125rem;
+    }
+    
+    h5 {
+        font-size: 1rem;
+    }
+    
+    p {
+        font-size: 0.875rem;
+    }
+    
+    .calendar-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .calendar-header p {
+        font-size: 0.875rem;
+    }
+    
+    .month-nav h4 {
+        font-size: 1.125rem;
+    }
+    
+    .btn {
+        font-size: 0.875rem;
+    }
+}
+
+/* ===== SMALL MOBILE (0 - 575px) ===== */
+@media (max-width: 575px) {
+    .recent-bookings-section {
+        padding: 15px 10px;
+        border-radius: 8px;
+    }
+    
+    .section-header h4 {
+        font-size: 1.125rem;
+    }
+    
+    .booking-card {
+        padding: 12px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+    }
+    
+    .booking-card-header {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .booking-card-title h5 {
+        font-size: 14px;
+    }
+    
+    .booking-card-date {
+        font-size: 12px;
+    }
+    
+    .booking-card-body {
+        gap: 10px;
+    }
+    
+    .booking-info-label {
+        font-size: 10px;
+    }
+    
+    .booking-info-value {
+        font-size: 13px;
+    }
+    
+    .booking-card-footer {
+        padding-top: 10px;
+    }
+    
+    .booking-card-unit {
+        font-size: 12px;
+    }
+    
+    .btn-view-detail {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .room-badge {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+    
+    .legend-item {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+    
+    .legend-dot {
+        width: 8px;
+        height: 8px;
+        border-width: 2px;
+    }
+    
+    /* Typography Small Mobile */
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.25rem;
+    }
+    
+    h3 {
+        font-size: 1.125rem;
+    }
+    
+    h4 {
+        font-size: 1rem;
+    }
+    
+    .calendar-header h2 {
+        font-size: 1.25rem;
+    }
+    
+    .month-nav h4 {
+        font-size: 1rem;
+    }
+}
+
+/* ===== LOADING STATE ===== */
+.bookings-loading {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.bookings-loading i {
+    font-size: 48px;
+    color: var(--primary-color);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== EMPTY STATE ===== */
+.bookings-empty {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.bookings-empty i {
+    font-size: 64px;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.bookings-empty h5 {
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.bookings-empty p {
+    color: #bbb;
+    font-size: 14px;
+}
+
+/* ===== LEGEND RESPONSIVE ===== */
+
+.legend-container {
+    position: relative;
+    max-width: fit-content;
+    margin-left: auto;
+}
+
+/* ===== MOBILE RESPONSIVE (0 - 767px) ===== */
+@media (max-width: 767px) {
+    /* ซ่อน Legend บนมือถือ */
+    .legend-container {
+        display: none;
+    }
+}

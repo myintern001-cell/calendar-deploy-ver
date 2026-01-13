@@ -1,0 +1,131 @@
+function printEventReport(event) {
+    const startTime = new Date(event.start_time);
+    const endTime = new Date(event.end_time);
+    
+    const formatTime = (date) => date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+    const formatDate = (date) => date.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+    
+    // คำนวณชั่วโมง
+    const hours = Math.abs(endTime - startTime) / 36e5;
+    
+    // สร้าง checklist อุปกรณ์
+    let equipmentChecklist = '';
+    if (event.Mic) equipmentChecklist += '<div class="checklist-item">ไมโครโฟน</div>';
+    if (event.Projector) equipmentChecklist += '<div class="checklist-item">โปรเจคเตอร์</div>';
+    if (event.TeleV) equipmentChecklist += '<div class="checklist-item">ทีวี</div>';
+    if (event.video_conference) equipmentChecklist += '<div class="checklist-item">Video Conference</div>';
+    if (event.streaming) equipmentChecklist += '<div class="checklist-item">Streaming</div>';
+    if (event.take_photo) equipmentChecklist += '<div class="checklist-item">ถ่ายภาพ</div>';
+    
+    // สร้างตารางอุปกรณ์เสริม
+    let equipmentTable = '';
+    if (event.internet_num || event.computer_num) {
+        equipmentTable = `
+            <table class="count-table">
+                <tr><th>รายการ</th><th>จำนวนที่ต้องการ</th></tr>
+                ${event.internet_num ? `<tr><td>Internet access (จุด/Account)</td><td>${event.internet_num}</td></tr>` : ''}
+                ${event.computer_num ? `<tr><td>คอมพิวเตอร์ (เครื่อง)</td><td>${event.computer_num}</td></tr>` : ''}
+            </table>
+        `;
+    }
+
+    const reportHTML = `
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>รายงานการจองห้องประชุม</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background: #f0f2f5; padding: 20px; }
+        .btn-print { padding: 12px 24px; background: #0056b3; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-bottom: 20px; }
+        .btn-print:hover { background: #004494; }
+        .a4-container { background: white; width: 210mm; min-height: 297mm; padding: 20mm; box-shadow: 0 0 15px rgba(0,0,0,0.1); margin: 0 auto; }
+        h1 { text-align: center; font-size: 24px; margin-bottom: 10px; text-decoration: underline; }
+        .report-subtitle { text-align: center; font-size: 16px; color: #555; margin-bottom: 30px; }
+        .section-header { font-size: 18px; font-weight: 700; background: #f8f9fa; padding: 8px 12px; border-left: 5px solid #0056b3; margin: 25px 0 15px; }
+        .info-grid { display: grid; grid-template-columns: 160px 1fr; gap: 10px 15px; margin-bottom: 20px; font-size: 15px; }
+        .info-label { font-weight: 600; color: #555; text-align: right; }
+        .info-value { font-weight: 400; color: #000; }
+        .highlight-value { font-weight: 700; color: #0056b3; }
+        .checklist-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .checklist-item { background: #eef6fc; border: 1px solid #cce5ff; padding: 6px 12px; border-radius: 20px; font-size: 14px; }
+        .checklist-item::before { content: "✓"; font-weight: bold; color: #28a745; margin-right: 6px; }
+        .count-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .count-table th, .count-table td { border: 1px solid #ddd; padding: 8px 12px; }
+        .count-table th { background: #f8f9fa; width: 50%; }
+        .count-table td { font-weight: bold; text-align: center; }
+        .report-footer { margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; display: flex; justify-content: space-between; }
+        .signature-box { text-align: center; width: 200px; }
+        .signature-line { margin-top: 30px; border-bottom: 1px dotted #000; }
+        @media print {
+            body { background: white; padding: 0; }
+            .btn-print { display: none !important; }
+            .a4-container { width: 100%; box-shadow: none; margin: 0; padding: 20mm !important; }
+            .section-header { background: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🖨️ พิมพ์รายงาน / บันทึกเป็น PDF</button>
+    <div class="a4-container">
+        <h1>ใบแจ้งรายละเอียดการจองห้องประชุม</h1>
+        <div class="report-subtitle">รหัสการจอง: #${event.room_appoinment_id} | วันที่ออกเอกสาร: ${new Date().toLocaleDateString('th-TH')}</div>
+
+        <div class="section-header">ข้อมูลการจองและสถานที่</div>
+        <div class="info-grid">
+            <div class="info-label">หัวข้อการประชุม :</div>
+            <div class="info-value highlight-value">${event.purpose}</div>
+            <div class="info-label">วันที่ใช้งาน :</div>
+            <div class="info-value highlight-value">${formatDate(startTime)}</div>
+            <div class="info-label">เวลา :</div>
+            <div class="info-value highlight-value">${formatTime(startTime)} - ${formatTime(endTime)} (รวม ${hours} ชั่วโมง)</div>
+            <div class="info-label">ห้องประชุม :</div>
+            <div class="info-value">${event.room_name || 'ไม่ระบุ'}</div>
+            <div class="info-label">รูปแบบการจัดโต๊ะ :</div>
+            <div class="info-value">${event.Table_style || 'ไม่ระบุ'}</div>
+        </div>
+
+        <div class="section-header">ข้อมูลผู้ขอใช้บริการ</div>
+        <div class="info-grid">
+            <div class="info-label">หน่วยงาน :</div>
+            <div class="info-value">${event.groupname || 'ไม่ระบุ'}</div>
+            <div class="info-label">จำนวนผู้เข้าร่วม :</div>
+            <div class="info-value">${event.num_attendees} คน</div>
+            <div class="info-label">ผู้ทำการจอง :</div>
+            <div class="info-value">${event.name || 'ไม่ระบุ'}</div>
+        </div>
+
+        ${equipmentChecklist ? `
+        <div class="section-header">ความต้องการด้านอุปกรณ์และเทคนิค</div>
+        <div style="margin-bottom: 10px; font-weight: 600;">โสตทัศนูปกรณ์และบริการ:</div>
+        <div class="checklist-container">${equipmentChecklist}</div>
+        ` : ''}
+
+        ${equipmentTable ? `
+        <div style="margin-top: 20px; font-weight: 600;">จำนวนอุปกรณ์เสริม:</div>
+        ${equipmentTable}
+        ` : ''}
+
+        <!--footer class="report-footer">
+            <div class="signature-box">
+                ลงชื่อผู้ขอใช้บริการ
+                <div class="signature-line"></div>
+                (..........................................)
+                <br>วันที่ ....../....../......
+            </div>
+            <div class="signature-box">
+                ลงชื่อเจ้าหน้าที่/ผู้อนุมัติ
+                <div class="signature-line"></div>
+                (..........................................)
+                <br>วันที่ ....../....../......
+            </div>
+        </footer-->
+    </div>
+</body>
+</html>`;
+
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(reportHTML);
+    printWindow.document.close();
+}

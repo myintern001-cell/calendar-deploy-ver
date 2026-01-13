@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบฟอร์มขออนุญาตใช้ห้องประชุม</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 0; }
+            .page { page-break-after: avoid; }
+        }
+        
+        body {
+            font-family: "TH SarabunPSK", "Sarabun", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .page {
+            width: 21cm;
+            height: 29.7cm;
+            padding: 1.5cm 2cm;
+            margin: 0 auto;
+            background: white;
+            box-sizing: border-box;
+            position: relative;
+        }
+        
+        .logo-container {
+            text-align: center;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #ccc;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .header {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .form-line {
+            margin: 8px 0;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        
+        .checkbox {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+            margin: 0 3px;
+            vertical-align: middle;
+        }
+        
+        .underline {
+            border-bottom: 1px dotted #000;
+            display: inline-block;
+            min-width: 150px;
+        }
+        
+        .underline-short {
+            border-bottom: 1px dotted #000;
+            display: inline-block;
+            min-width: 80px;
+        }
+        
+        .underline-medium {
+            border-bottom: 1px dotted #000;
+            display: inline-block;
+            min-width: 250px;
+        }
+        
+        .underline-long {
+            border-bottom: 1px dotted #000;
+            display: inline-block;
+            min-width: 400px;
+        }
+        
+        .indent1 { margin-left: 30px; }
+        .indent2 { margin-left: 50px; }
+        
+        .signature-box {
+            text-align: center;
+            margin: 20px 0 15px 0;
+        }
+        
+        .signature-line {
+            display: inline-block;
+            border-bottom: 1px dotted #000;
+            min-width: 200px;
+            margin-bottom: 5px;
+        }
+        
+        .approval-section {
+            margin-top: 15px;
+        }
+        
+        .note-section {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.3;
+        }
+        
+        .note-section ol {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        
+        .note-section li {
+            margin: 3px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- พื้นที่สำหรับใส่ตราครุฑ -->
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                ใส่ตราครุฑที่นี่
+            </div>
+        </div>
+        
+        <div class="header">บันทึกข้อความ</div>
+        
+        <div class="form-line">
+            ส่วนราชการ <span class="underline-long"></span> โทร<span class="underline"></span>
+        </div>
+        
+        <div class="form-line">
+            ที่ สธ 0315.2( <span style="width:30px;display:inline-block;border-bottom:1px dotted #000;"></span> ) /<span class="underline-short"></span> วันที่<span class="underline"></span>
+        </div>
+        
+        <div class="form-line">
+            <strong>เรื่อง</strong> ขออนุญาตใช้ห้องประชุม
+        </div>
+        
+        <div class="form-line">
+            <strong>เรียน</strong> รองผู้อำนวยการด้านอำนวยการ (ผ่านงานบริหารทั่วไป)
+        </div>
+        
+        <div class="form-line" style="text-indent: 3em;">
+            ด้วย กลุ่มภารกิจ / ฝ่าย / กลุ่มงาน / งาน / คณะกรรมการ<span class="underline-medium"></span>
+        </div>
+        
+        <div class="form-line">
+            มีความประสงค์ขอใช้ห้องประชุม 
+            <span class="checkbox"></span> อำนวยการ (ข้างห้องงานยุทธศาสตร์และแผนงาน) 
+            <span class="checkbox"></span> สิริศักดิ์ ภูริพัฒน์
+        </div>
+        
+        <div class="form-line">
+            <span class="checkbox"></span> พระวิสุทธาธิบดี 
+            <span class="checkbox"></span> สิทธิกร บุญฉิม 
+            <span class="checkbox"></span> พอเพียง 
+            <span class="checkbox"></span> <span class="underline"></span>
+        </div>
+        
+        <div class="form-line">
+            วัตถุประสงค์เพื่อรับรอง / ประชุม<span class="underline-long"></span>
+        </div>
+        
+        <div class="form-line">
+            ในวันที่<span class="underline"></span> เวลา<span class="underline-short"></span> น. จำนวน<span class="underline-short"></span>คน
+        </div>
+        
+        <div class="form-line">
+            <strong>โดยขอรับการสนับสนุนดังนี้</strong>
+        </div>
+        
+        <div class="form-line indent1">
+            <strong>1. ฝ่ายบริหารทั่วไป (งานประชาสัมพันธ์)</strong>
+        </div>
+        <div class="form-line indent2">
+            1.1 ประกาศเสียงตามสาย ในวันที่<span class="underline-short"></span>เดือน<span class="underline"></span>พ.ศ<span class="underline-short"></span>
+        </div>
+        
+        <div class="form-line indent1">
+            <strong>2. ฝ่ายพัสดุและบำรุงรักษา (งานซ่อมบำรุง)</strong>
+        </div>
+        <div class="form-line indent2">
+            2.1 จัดโต๊ะ แบบ 
+            <span class="checkbox"></span> Classroom 
+            <span class="checkbox"></span> รูปตัว U 
+            <span class="checkbox"></span><span class="underline"></span>
+        </div>
+        
+        <div class="form-line indent1">
+            <strong>3. กลุ่มงานเทคโนโลยีสารสนเทศและสนับสนุนวิชาการ</strong>
+        </div>
+        <div class="form-line indent2">
+            3.1 อุปกรณ์โสตทัศนูปกรณ์ ที่ต้องจัดเตรียมมีดังนี้
+        </div>
+        <div class="form-line indent2" style="margin-left: 70px;">
+            <span class="checkbox"></span> ไมโครโฟน 
+            <span class="checkbox"></span> โทรทัศน์ 
+            <span class="checkbox"></span> ถ่ายภาพนิ่ง
+        </div>
+        <div class="form-line indent2" style="margin-left: 70px;">
+            <span class="checkbox"></span> Video Conference 
+            <span class="checkbox"></span> สตรีมมิ่ง (streaming)
+        </div>
+        <div class="form-line indent2" style="margin-left: 70px;">
+            <span class="checkbox"></span> เครื่องฉายแผ่นทึบ / โปรเจคเตอร์ / คอมพิวเตอร์
+        </div>
+        <div class="form-line indent2">
+            3.2 อุปกรณ์ศูนย์คอมพิวเตอร์
+        </div>
+        <div class="form-line indent2" style="margin-left: 70px;">
+            <span class="checkbox"></span> ระบบอินเตอร์เน็ต จำนวน<span class="underline-short"></span>user
+        </div>
+        <div class="form-line indent2" style="margin-left: 70px;">
+            <span class="checkbox"></span> เครื่องคอมพิวเตอร์ จำนวน<span class="underline-short"></span>เครื่อง
+        </div>
+        
+        <div class="signature-box">
+            <div class="signature-line"></div><br>
+            ผู้ขอใช้ห้องประชุม (หัวหน้าฝ่าย/หัวหน้ากลุ่มงาน/หัวหน้างาน)
+        </div>
+        
+        <div class="approval-section">
+            <div class="form-line">
+                <strong>เรียน</strong> รองผู้อำนวยการด้านอำนวยการ
+            </div>
+            
+            <div class="form-line" style="text-indent: 3em;">
+                จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ และแจ้งผู้ที่เกี่ยวข้องทราบ 
+                <span class="checkbox"></span> อนุมัติ 
+                <span class="checkbox"></span> ไม่อนุมัติ
+            </div>
+            
+            <div class="form-line">
+                เพื่อดำเนินการต่อไปด้วย จะเป็นพระคุณ
+            </div>
+        </div>
+        
+        <div style="display: flex; justify-content: space-around; margin-top: 15px;">
+            <div class="signature-box">
+                (นางสาวสิรวีร์ กีรติฉายาสิทธิ์)<br>
+                หัวหน้างานบริหารทั่วไป
+            </div>
+            <div class="signature-box">
+                (นางสิริรัตน์ มูลคำ)<br>
+                รองผู้อำนวยการด้านอำนวยการ
+            </div>
+        </div>
+        
+        <div class="note-section">
+            <strong>หมายเหตุ</strong>
+            <ol>
+                <li>แบบขอใช้ห้องประชุม ให้ดำเนินการส่งฝ่ายบริหารทั่วไป ก่อนการประชุม 3 – 5 วัน</li>
+                <li>หากต้องการใช้ห้องประชุมกรณีเร่งด่วนหน่วยงานผู้ขอต้องถ่ายเอกสารแบบฟอร์มให้หน่วยงานที่เกี่ยวข้องก่อนด้วย</li>
+                <li>หากมีการยกเลิกการใช้ห้องประชุม กรุณาแจ้งให้ฝ่ายบริหารทั่วไปทราบอย่างน้อยล่วงหน้า 2 วัน</li>
+                <li>ฝ่ายบริหารทั่วไปเมื่อได้รับเอกสารการขอใช้ห้องประชุมแล้วให้ฝ่ายบริหารฯ ถ่ายเอกสารแบบฟอร์มส่งหน่วยงานที่เกี่ยวข้องด้วย ก่อนการประชุม 3 – 5 วัน</li>
+                <li>งานอาคารสถานที่ จัดเตรียมห้องประชุม อำนวยความสะดวกในการประชุม ตลอดจนสนับสนุนอุปกรณ์ต่าง ๆ ประสานงานเกี่ยวกับอุปกรณ์สื่อสารที่ใช้ในการประชุมและบรรยาย โดยประสานงานซ่อมบำรุงในการจัดโต๊ะประชุม ดูแลความเรียบร้อยของห้องประชุม ตลอดจนอำนวยความสะดวกต่าง ๆในการจัดประชุมดังกล่าว</li>
+                <li>ฝ่ายบริหารทั่วไปจะจัดระบบและกลั่นกรองเบื้องต้นกับผู้จัดงานโดยไม่มีการซ้ำซ้อนก่อนการเสนอใบขออนุญาตห้องประชุม</li>
+                <li>ผู้ขออนุมัติใช้ห้องประชุมและขอรับรองสนับสนุนอาหารต้องเป็นระดับหัวหน้ากลุ่มงาน / หัวหน้าฝ่าย / หรือหัวหน้างาน</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
