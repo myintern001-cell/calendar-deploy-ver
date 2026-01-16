@@ -33,7 +33,7 @@ function initializeComponents() {
     $(document).on('shown.bs.modal', function () {
         $(document).off('focusin.modal');
     });
-
+ 
     // Dayjs plugin
     if (window.dayjs_plugin_customParseFormat) {
         dayjs.extend(window.dayjs_plugin_customParseFormat);
@@ -1156,12 +1156,12 @@ function showEventDetail(event) {
     let equipmentHtml = '';
     const equipmentList = [];
     
-    if (event.Mic) equipmentList.push('<i class="bi bi-mic"></i> ไมโครโฟน');
-    if (event.Projector) equipmentList.push('<i class="bi bi-projector"></i> โปรเจคเตอร์');
-    if (event.TeleV) equipmentList.push('<i class="bi bi-tv"></i> ทีวี');
-    if (event.video_conference) equipmentList.push('<i class="bi bi-camera-video"></i> Video Conference');
-    if (event.streaming) equipmentList.push('<i class="bi bi-broadcast"></i> Streaming');
-    if (event.take_photo) equipmentList.push('<i class="bi bi-camera"></i> ถ่ายภาพ');
+    if (event.Mic===1) equipmentList.push('<i class="bi bi-mic"></i> ไมโครโฟน');
+    if (event.Projector===1) equipmentList.push('<i class="bi bi-projector"></i> โปรเจคเตอร์');
+    if (event.TeleV===1) equipmentList.push('<i class="bi bi-tv"></i> ทีวี');
+    if (event.video_conference===1) equipmentList.push('<i class="bi bi-camera-video"></i> Video Conference');
+    if (event.streaming===1) equipmentList.push('<i class="bi bi-broadcast"></i> Streaming');
+    if (event.take_photo===1) equipmentList.push('<i class="bi bi-camera"></i> ถ่ายภาพ');
     
     if (equipmentList.length > 0) {
         equipmentHtml = equipmentList.map(eq => `<span class="equipment-badge">${eq}</span>`).join('');

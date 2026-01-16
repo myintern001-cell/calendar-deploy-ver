@@ -53,7 +53,7 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="index.php"><i class="bi bi-house"></i> หน้าปฏิทิน</a></li>
-                <li><a href="my-bookings.php" class="active"><i class="bi bi-person-circle"></i> การจองของฉัน</a></li>
+                <li><a href="my-bookings.php" ><i class="bi bi-person-circle"></i> การจองของฉัน</a></li>
                 <li><a href="index.php#recent-bookings"><i class="bi bi-calendar3"></i> รายการจองทั้งหมด</a></li>
             </ul>
         </div>

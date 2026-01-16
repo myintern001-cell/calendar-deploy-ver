@@ -13,12 +13,12 @@
     <link rel="stylesheet" href="./assests/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assests/css/bootstrap-icons.min.css">
     <link rel="stylesheet" href="./assests/css/all.min.css">
-    <link rel="stylesheet" href="./assests/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="./assests/css/sweetalert2.min.css">444
     <link rel="stylesheet" href="./assests/css/select2.min.css">
     <link rel="stylesheet" href="./assests/css/select2-bootstrap-5-theme.min.css">
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
+<body >
     <!-- page wrapper -->
     <div class="page-wrapper">
         <!-- Hamburger Button (แสดงเฉพาะมือถือ) -->
@@ -44,7 +44,6 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="#" ><i class="bi bi-house"></i> หน้าปฏิทิน</a></li>
-                <li><a href="my-bookings.php" class="active"><i class="bi bi-person-circle"></i> การจองของฉัน</a></li>
                 <li><a href="#" id="menu-recent-bookings"><i class="bi bi-calendar3"></i> รายการจองทั้งหมด</a></li>
             </ul>
         </div>

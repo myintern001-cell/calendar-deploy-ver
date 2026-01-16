@@ -20,7 +20,6 @@ function loadMyBookings() {
 
     // TODO: แทนที่ด้วย Session UserID จริง
     const userId = 1; // <?php echo $session_userID; ?>
-
     $.ajax({
         url: 'getMyBookings.php',
         type: 'GET',
